@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grand Isle Digital Library – Shahjahanpur #1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8973A;
+    --gold-light: #E8B96A;
+    --cream: #F9F4ED;
+    --dark: #0F0D0A;
+    --deep: #1A1510;
+    --mid: #2E2416;
+    --text: #3D2E1A;
+    --muted: #7A6550;
+    --accent: #8B1A1A;
+    --green: #2D5016;
+    --border: rgba(200,151,58,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(15,13,10,0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+  .nav-logo span { color: var(--cream); font-weight: 400; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+  .nav-badge {
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 0.35rem 1rem;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10rem 4rem 6rem 4rem;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(200,151,58,0.12);
+    border: 1px solid var(--border);
+    color: var(--gold);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border-radius: 2px;
+    width: fit-content;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-badge::before {
+    content: '★';
+    font-size: 0.65rem;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+  .hero-title .gold { color: var(--gold); }
+  .hero-title .isle { font-style: italic; font-weight: 400; }
+  .hero-sub {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+  .hero-desc {
+    font-size: 0.98rem;
+    line-height: 1.8;
+    color: rgba(249,244,237,0.65);
+    max-width: 460px;
+    margin-bottom: 3rem;
+    animation: fadeUp 1s 0.3s ease both;
+  }
+  .hero-cta-row {
+    display: flex;
+    gap: 1rem;
+    animation: fadeUp 1s 0.4s ease both;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--dark);
+    padding: 0.9rem 2.2rem;
+    border: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--cream);
+    padding: 0.9rem 2.2rem;
+    border: 1px solid rgba(249,244,237,0.3);
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+  }
+  /* decorative grid lines */
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,151,58,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,151,58,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .hero-card-stack {
+    position: relative;
+    width: 340px;
+    height: 420px;
+    animation: fadeUp 1s 0.5s ease both;
+  }
+  .hero-card {
+    position: absolute;
+    width: 300px;
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  }
+  .hero-card:nth-child(1) { top: 0; left: 40px; transform: rotate(-3deg); }
+  .hero-card:nth-child(2) { top: 30px; left: 20px; transform: rotate(-1deg); }
+  .hero-card.main { top: 60px; left: 0; transform: rotate(0deg); z-index: 3; }
+  .card-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+  .seat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .seat-number span { color: var(--gold); }
+  .seat-desc { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .seat-bar-bg {
+    background: rgba(255,255,255,0.08);
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 0.4rem;
+  }
+  .seat-bar {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    width: 65%;
+    animation: barGrow 1.5s 1s ease both;
+  }
+  @keyframes barGrow { from { width: 0 } }
+  .seat-legend { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); }
+  .seat-legend strong { color: var(--green); }
+  .availability-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #4CAF50;
+    margin-right: 0.4rem;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(76,175,80,0.5); }
+    50% { box-shadow: 0 0 0 6px rgba(76,175,80,0); }
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--mid);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+  }
+  .stat-item {
+    padding: 2rem;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item:hover { background: rgba(200,151,58,0.06); }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.05em; }
+
+  /* ── SECTIONS COMMON ── */
+  section { padding: 6rem 4rem; }
+  .section-tag {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+  }
+  .section-desc {
+    color: rgba(249,244,237,0.6);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    max-width: 500px;
+  }
+
+  /* ── FACILITIES ── */
+  #facilities { background: var(--deep); }
+  .facilities-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .facility-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .fac-card {
+    background: var(--mid);
+    border: 1px solid var(--border);
+    padding: 1.6rem;
+    border-radius: 4px;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .fac-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .fac-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+  .fac-card:hover::after { transform: scaleX(1); }
+  .fac-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+  .fac-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .fac-note { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+  .fac-highlight {
+    grid-column: span 2;
+    background: linear-gradient(135deg, rgba(200,151,58,0.1), rgba(200,151,58,0.04));
+    border-color: rgba(200,151,58,0.4);
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .fac-highlight .fac-icon { font-size: 2.5rem; flex-shrink: 0; }
+
+  .bring-own {
+    background: var(--mid);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 1.5rem 2rem;
+    margin-top: 2rem;
+    border-radius: 2px;
+  }
+  .bring-own h4 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .bring-own p { font-size: 0.85rem; color: rgba(249,244,237,0.65); line-height: 1.7; }
+
+  /* ── TOPPERS SECTION ── */
+  #toppers { background: var(--dark); }
+  .toppers-inner { max-width: 1200px; margin: 0 auto; }
+  .toppers-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    margin-bottom: 4rem;
+  }
+  .topper-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .topper-card {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    border-radius: 4px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .topper-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(200,151,58,0.15);
+  }
+  .topper-rank {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    width: 28px; height: 28px;
+    background: var(--gold);
+    color: var(--dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .topper-avatar {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--dark);
+    margin: 0 auto 1rem;
+    border: 2px solid var(--border);
+  }
+  .topper-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .topper-achieve {
+    font-size: 0.8rem;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+  .topper-year {
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .topper-quote {
+    font-size: 0.78rem;
+    color: rgba(249,244,237,0.5);
+    font-style: italic;
+    margin-top: 0.8rem;
+    line-height: 1.6;
+    border-top: 1px solid var(--border);
+    padding-top: 0.8rem;
+  }
+
+  /* ── SEATS SECTION ── */
+  #seats { background: var(--deep); }
+  .seats-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .seat-types { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+  .seat-row {
+    background: var(--mid);
+    border: 1px solid var(--border);
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 3px;
+    transition: border-color 0.2s;
+  }
+  .seat-row:hover { border-color: var(--gold); }
+  .seat-row-info h4 { font-size: 0.9rem; font-weight: 600; }
+  .seat-row-info p { font-size: 0.78rem; color: var(--muted); }
+  .seat-row-count {
+    text-align: right;
+  }
+  .seat-row-count .available {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #4CAF50;
+  }
+  .seat-row-count .total { font-size: 0.72rem; color: var(--muted); }
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(76,175,80,0.1);
+    border: 1px solid rgba(76,175,80,0.3);
+    color: #4CAF50;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+  .booking-cta {
+    background: linear-gradient(135deg, rgba(200,151,58,0.15), rgba(139,26,26,0.1));
+    border: 1px solid var(--border);
+    padding: 2rem;
+    border-radius: 4px;
+    margin-top: 2rem;
+  }
+  .booking-cta h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+  .booking-cta p { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.7; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--dark); }
+  .contact-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+  .contact-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+  }
+  .contact-icon {
+    width: 44px; height: 44px;
+    background: rgba(200,151,58,0.1);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    border-radius: 3px;
+  }
+  .contact-text h4 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 0.3rem; }
+  .contact-text p { font-size: 0.9rem; line-height: 1.6; color: var(--cream); }
+  .contact-text a { color: var(--cream); text-decoration: none; }
+  .contact-text a:hover { color: var(--gold); }
+
+  .contact-form-area {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    border-radius: 4px;
+  }
+  .contact-form-area h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .form-row { margin-bottom: 1rem; }
+  .form-row input,
+  .form-row textarea,
+  .form-row select {
+    width: 100%;
+    background: var(--mid);
+    border: 1px solid var(--border);
+    color: var(--cream);
+    padding: 0.85rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-row input:focus,
+  .form-row textarea:focus,
+  .form-row select:focus { border-color: var(--gold); }
+  .form-row textarea { min-height: 100px; resize: vertical; }
+  .form-row select option { background: var(--mid); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--mid);
+    border-top: 1px solid var(--border);
+    padding: 3rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-brand .nav-logo { font-size: 1.1rem; }
+  .footer-brand p { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+  .footer-hours {
+    text-align: center;
+    background: rgba(200,151,58,0.08);
+    border: 1px solid var(--border);
+    padding: 1rem 2rem;
+    border-radius: 4px;
+  }
+  .footer-hours .tag { font-size: 0.7rem; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; }
+  .footer-hours .time {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--cream);
+  }
+  .footer-social {
+    display: flex;
+    gap: 1rem;
+  }
+  .social-link {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--cream);
+    font-size: 1rem;
+    border-radius: 3px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .social-link:hover { background: rgba(200,151,58,0.15); border-color: var(--gold); }
+
+  /* ── DIVIDER ── */
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 1.2rem;
+    letter-spacing: 0.5em;
+    opacity: 0.4;
+    padding: 1.5rem 0;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 8rem 1.5rem 4rem; }
+    section { padding: 4rem 1.5rem; }
+    .facilities-grid,
+    .toppers-header,
+    .seats-inner,
+    .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .topper-cards { grid-template-columns: 1fr 1fr; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    footer { flex-direction: column; gap: 2rem; text-align: center; }
+    .facility-cards { grid-template-columns: 1fr; }
+    .fac-highlight { grid-column: span 1; }
+  }
+
+  /* scroll-in animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <div class="nav-logo">Grand <span>Isle</span> Digital Library</div>
+  <ul class="nav-links">
+    <li><a href="#facilities">Facilities</a></li>
+    <!-- <li><a href="#toppers">Achievers</a></li> -->
+    <li><a href="#seats">Seats</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <span class="nav-badge">24/7 Open</span>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-badge">Shahjahanpur की No. 1 Library</div>
+    <h1 class="hero-title">
+      Grand <span class="isle">Isle</span><br>
+      <span class="gold">Digital</span><br>
+      Library
+    </h1>
+    <p class="hero-sub">शाहजहाँपुर का सर्वश्रेष्ठ अध्ययन केंद्र</p>
+    <p class="hero-desc">
+      A premium, distraction-free study sanctuary open round the clock — 
+      built for serious aspirants who come with purpose, leave with results.
+    </p>
+    <div class="hero-cta-row">
+      <a href="#seats" class="btn-primary">Check Availability</a>
+      <a href="#contact" class="btn-outline">Visit Us</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-card-stack">
+      <div class="hero-card"></div>
+      <div class="hero-card"></div>
+      <div class="hero-card main">
+        <div class="card-label">Live Seat Status</div>
+        <div class="seat-number"><span>19</span></div>
+        <div class="seat-desc">seats available right now</div>
+        <div class="seat-bar-bg"><div class="seat-bar"></div></div>
+        <div class="seat-legend">
+          <span>Total: 100+</span>
+          <span><strong>19 Open</strong></span>
+        </div>
+        <br>
+        <div style="font-size:0.78rem; color: rgba(249,244,237,0.5);">
+          <span class="availability-dot"></span> Library currently open
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="stats-bar reveal">
+  <div class="stat-item">
+    <div class="stat-num">100+</div>
+    <div class="stat-label">Total Study Seats</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">24/7</div>
+    <div class="stat-label">Always Open</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">#1</div>
+    <div class="stat-label">In Shahjahanpur</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">100+</div>
+    <div class="stat-label">Success Stories</div>
+  </div>
+</div>
+
+<!-- ── FACILITIES ── -->
+<section id="facilities">
+  <div class="facilities-grid reveal">
+    <div>
+      <p class="section-tag">Infrastructure</p>
+      <h2 class="section-title">Everything You Need to <em style="color:var(--gold)">Focus</em></h2>
+      <p class="section-desc">
+        Grand Isle is a premium digital study space — not a book library. 
+        Bring your own device, we provide the perfect environment to make every hour count.
+      </p>
+      <div class="bring-own">
+        <h4>📱 Apna Device Lao</h4>
+        <p>यह एक digital library है। यहाँ books नहीं मिलती। Students खुद अपना Laptop या Tablet लेकर आते हैं। हम provide करते हैं — एक perfect, distraction-free study environment.</p>
+      </div>
+    </div>
+    <div class="facility-cards">
+      <div class="fac-card fac-highlight">
+        <div class="fac-icon">⚡</div>
+        <div>
+          <div class="fac-name">High-Speed Wi-Fi</div>
+          <div class="fac-note">Blazing fast internet — uninterrupted, stable, and secure. Stream lectures, download resources without any lag.</div>
+        </div>
+      </div>
+      <div class="fac-card">
+        <div class="fac-icon">❄️</div>
+        <div class="fac-name">Central AC</div>
+        <div class="fac-note">Comfortable temperature year-round for peak concentration.</div>
+      </div>
+      <div class="fac-card">
+        <div class="fac-icon">💡</div>
+        <div class="fac-name">24/7 Lighting</div>
+        <div class="fac-note">Bright, eye-safe lighting — day or night, no interruption.</div>
+      </div>
+      <div class="fac-card">
+        <div class="fac-icon">💧</div>
+        <div class="fac-name">Water Cooler</div>
+        <div class="fac-note">Chilled filtered water available at all times.</div>
+      </div>
+      <div class="fac-card">
+        <div class="fac-icon">🔇</div>
+        <div class="fac-name">Silent Zone</div>
+        <div class="fac-note">Strictly maintained calm study environment — zero disturbance.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TOPPERS / ACHIEVERS ── -->
+<!-- <section id="toppers">
+  <div class="toppers-inner reveal">
+    <div class="toppers-header">
+      <div>
+        <p class="section-tag">Hall of Fame</p>
+        <h2 class="section-title">Yahan se Padha, <em style="color:var(--gold)">Muqam Hasil Kiya</em></h2>
+      </div>
+      <p class="section-desc">
+        Hundreds of our students have gone on to crack UPSC, state police, defence, and more. 
+        This library has been the silent partner in their success.
+      </p>
+    </div>
+
+    <div class="topper-cards">
+      <div class="topper-card">
+        <div class="topper-rank">1</div>
+        <div class="topper-avatar">A</div>
+        <div class="topper-name">Aman Verma</div>
+        <div class="topper-achieve">🎖️ IPS Officer Selected</div>
+        <div class="topper-year">UP Police 2023</div>
+        <div class="topper-quote">"Grand Isle ki silent space ne meri preparation ko wings de di."</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-rank">2</div>
+        <div class="topper-avatar">P</div>
+        <div class="topper-name">Priya Sharma</div>
+        <div class="topper-achieve">🏛️ IAS Qualified</div>
+        <div class="topper-year">UPSC 2022</div>
+        <div class="topper-quote">"24/7 availability ne mujhe apna schedule khud set karne ki azaadi di."</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-rank">3</div>
+        <div class="topper-avatar">R</div>
+        <div class="topper-name">Ravi Mishra</div>
+        <div class="topper-achieve">⭐ SSB / Defence</div>
+        <div class="topper-year">Army 2023</div>
+        <div class="topper-quote">"Yahan ka peaceful environment hi meri strength bana."</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-rank">4</div>
+        <div class="topper-avatar">N</div>
+        <div class="topper-name">Neha Gupta</div>
+        <div class="topper-achieve">💼 Government Job</div>
+        <div class="topper-year">SSC CGL 2023</div>
+        <div class="topper-quote">"Sab kuch available tha — bas mehnat karni thi."</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-rank">5</div>
+        <div class="topper-avatar">S</div>
+        <div class="topper-name">Suresh Kumar</div>
+        <div class="topper-achieve">🏥 Medical Entrance</div>
+        <div class="topper-year">NEET 2022</div>
+        <div class="topper-quote">"High-speed Wi-Fi ne online resources ka access easy bana diya."</div>
+      </div>
+      <div class="topper-card">
+        <div class="topper-rank">6</div>
+        <div class="topper-avatar">K</div>
+        <div class="topper-name">Kavya Singh</div>
+        <div class="topper-achieve">💻 Work From Home Pro</div>
+        <div class="topper-year">2024</div>
+        <div class="topper-quote">"Perfect space for remote work — AC, Wi-Fi, peace. Sab mile ek jagah."</div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- ── SEATS ── -->
+<section id="seats">
+  <div class="seats-inner reveal">
+    <div>
+      <p class="section-tag">Seat Availability</p>
+      <h2 class="section-title">Apni <em style="color:var(--gold)">Seat</em> Abhi Book Karo</h2>
+      <p class="section-desc">Limited seats, unlimited potential. Check live availability and reserve your spot today.</p>
+
+      <div class="live-badge">
+        <span class="availability-dot"></span> Live Status
+      </div>
+
+      <div class="seat-types">
+        <div class="seat-row">
+          <div class="seat-row-info">
+            <h4>Regular Study Seat</h4>
+            <p>Fixed desk with power socket & Wi-Fi</p>
+          </div>
+          <div class="seat-row-count">
+            <div class="available">13</div>
+            <div class="total">/ 70 total</div>
+          </div>
+        </div>
+        <div class="seat-row">
+          <div class="seat-row-info">
+            <h4>Premium Cabin Seat</h4>
+            <p>Private cubicle — max focus zone</p>
+          </div>
+          <div class="seat-row-count">
+            <div class="available">4</div>
+            <div class="total">/ 20 total</div>
+          </div>
+        </div>
+        <div class="seat-row">
+          <div class="seat-row-info">
+            <h4>Work From Home Desk</h4>
+            <p>Large desk, ergonomic chair</p>
+          </div>
+          <div class="seat-row-count">
+            <div class="available">2</div>
+            <div class="total">/ 10 total</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="booking-cta">
+        <h3>Seat Reserve Karo</h3>
+        <p>Walk in directly ya call karke seat confirm karo. Sabse pehle aao, sabse pehle pao.</p>
+        <a href="tel:+9191691166508" class="btn-primary">📞 Call Now to Book</a>
+      </div>
+
+      <div style="margin-top: 2rem; background: var(--mid); border: 1px solid var(--border); padding: 1.5rem; border-radius: 4px;">
+        <p class="section-tag" style="margin-bottom:1rem;">Membership Plans</p>
+        <div style="display:flex; flex-direction:column; gap:0.8rem;">
+          <div style="display:flex; justify-content:space-between; padding-bottom:0.8rem; border-bottom:1px solid var(--border);">
+            <span style="font-size:0.85rem;">Monthly</span>
+            <span style="color:var(--gold); font-weight:600;">₹ 999/month</span>
+          </div>
+          <div style="display:flex; justify-content:space-between;">
+            <span style="font-size:0.85rem;">6-Month Plan</span>
+            <span style="color:var(--gold); font-weight:600;">₹ 5,900</span>
+          </div>
+        </div>
+        <p style="font-size:0.72rem; color:var(--muted); margin-top:1rem;">* Prices indicative. Contact us for exact plans.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact" style="background: var(--dark);">
+  <div class="contact-inner reveal">
+    <div>
+      <p class="section-tag">Contact Us</p>
+      <h2 class="section-title">Hamare <em style="color:var(--gold)">Paas Aao</em></h2>
+      <p class="section-desc" style="margin-bottom:3rem;">
+        Koi bhi sawaal ho — admission, seats, facilities — hum yahan hain. 
+        Walk-in welcome hai, 24/7.
+      </p>
+
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div class="contact-text">
+          <h4>Address</h4>
+          <p>Grand Isle Digital Library<br>VV4V+WFX, Azizganj, Shahjahanpur, Uttar Pradesh 242226, India</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-text">
+          <h4>Phone / WhatsApp</h4>
+          <p><a href="tel:+9191691166508">+91 91691 166508</a><br><a href="tel:+919236617503">+91 92366 17503</a></p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">⏰</div>
+        <div class="contact-text">
+          <h4>Timings</h4>
+          <p>Open 24 Hours, 7 Days a Week<br>
+          <span style="color:var(--gold); font-weight:600;">365 din — kabhi band nahin</span></p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div class="contact-text">
+          <h4>Email</h4>
+          <p><a href="mailto:grandislibrary@gmail.com">grandislibrary@gmail.com</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="contact-form-area">
+      <h3>Enquiry Bhejo</h3>
+      <div class="form-row">
+        <input type="text" placeholder="Aapka naam *">
+      </div>
+      <div class="form-row">
+        <input type="tel" placeholder="WhatsApp number *">
+      </div>
+      <div class="form-row">
+        <select>
+          <option value="" disabled selected>Kya jaanna chahte ho?</option>
+          <option>Seat Availability</option>
+          <option>Membership Plans</option>
+          <option>Facilities Info</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <textarea placeholder="Apna message likhein..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%; padding:1rem; font-size:0.9rem;" onclick="alert('Shukriya! Hum jaldi contact karenge. 🙏')">
+        Send Enquiry →
+      </button>
+    </div> -->
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-brand">
+    <div class="nav-logo">Grand <span>Isle</span> Digital Library</div>
+    <p>Shahjahanpur's Most Trusted Study Space | Est. 2020</p>
+    <p style="margin-top:0.4rem; font-size:0.72rem; color:#5A4A35;">© 2024 Grand Isle Library. All rights reserved.</p>
+  </div>
+
+  <div class="footer-hours">
+    <div class="tag">We Never Close</div>
+    <div class="time">24 / 7 / 365</div>
+    <div style="font-size:0.75rem; color:var(--muted); margin-top:0.3rem;">Electricity & AC always on</div>
+  </div>
+
+  <div class="footer-social">
+    <a href="#" class="social-link" title="Instagram">📸</a>
+    <a href="#" class="social-link" title="WhatsApp">💬</a>
+    <a href="#" class="social-link" title="YouTube">▶️</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>
